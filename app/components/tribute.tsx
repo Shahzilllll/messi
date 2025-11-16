@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { VolumeX, Volume2 } from "lucide-react";
 
 // Simple inView hook
-function useInViewSimple(ref: React.RefObject<HTMLElement>, margin = 0) {
+function useInViewSimple(ref: React.RefObject<HTMLElement | null>, margin = 0) {
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
