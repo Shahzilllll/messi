@@ -14,7 +14,7 @@ export default function EarlyAchievements() {
     {
       title: "First Copa America",
       year: "2021",
-      img: "/about/Copa.jpeg",
+      img: "/about/copa.jpeg",
       description: "After years of near-misses, Messi finally lifted the Copa America with Argentina, fulfilling a lifelong dream."
     }
   ];
