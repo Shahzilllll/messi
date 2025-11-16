@@ -5,6 +5,7 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ScrollToTop from "./scrolltotop";
 import { Analytics } from "@vercel/analytics/next"
+import { ThemeProvider } from "next-themes";
  // make this file as we discussed
 
 // Fonts
@@ -32,6 +33,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+      >
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${cinzel.variable} antialiased bg-black text-white`}
       >
@@ -45,6 +51,7 @@ export default function RootLayout({
           <Footer />
         </div>
       </body>
+      </ThemeProvider>
     </html>
   );
 }

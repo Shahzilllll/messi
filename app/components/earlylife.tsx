@@ -19,7 +19,7 @@ export default function EarlyLifeAndDribble() {
             </h2>
 
             <p className="text-base sm:text-lg lg:text-lg leading-relaxed text-center lg:text-left">
-              <span className="text-pink-400">Lionel Messi</span> was born on <span className="text-pink-400">February 24, 1987</span> in <span className="text-pink-400">Rosario, Argentina</span>. 
+              <span className="text-pink-400">Lionel Messi</span> was born on <span className="text-pink-400">June 24, 1987</span> in <span className="text-pink-400">Rosario, Argentina</span>. 
               From a very young age, he loved <span className="text-pink-400">football</span> and showed incredible <span className="text-pink-400">talent</span>. 
               His focus, passion, and natural ability were already clear to everyone around him.
             </p>

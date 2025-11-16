@@ -3,6 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef } from "react";
+import ThemeToggle from "@/app/components/theme";
+
 
 function NavLink({ href, children }: { href: string; children: string }) {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });

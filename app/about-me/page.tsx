@@ -32,8 +32,8 @@ export default function AboutMe() {
         </p>
 
         <blockquote className="italic opacity-80 border-l-4 border-pink-600 pl-4">
-          "There are more important things in life than winning or losing a game." —{" "}
-          <span className="text-pink-500 font-semibold">Lionel Messi</span>
+          "Aarish Ki Phen Nu Naman" —{" "}
+          <span className="text-pink-500 font-semibold">Rehan Ali Ajmeri</span>
         </blockquote>
       </section>
 
