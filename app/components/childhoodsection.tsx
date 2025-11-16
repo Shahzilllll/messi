@@ -1,8 +1,7 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useAnimation, useInView } from "framer-motion";
 
 const images = [
   "/home/child1.jpg",
@@ -12,50 +11,13 @@ const images = [
 ];
 
 export default function ChildhoodSection() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  const controls = useAnimation();
-
-  useEffect(() => {
-    if (inView) controls.start("visible");
-  }, [inView, controls]);
-
-  const textVariant = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.9, ease: "easeOut" },
-    },
-  };
-
-  const imageVariant = {
-    hidden: { opacity: 0, x: 50, scale: 0.9 },
-    visible: (i: number) => ({
-      opacity: 1,
-      x: 0,
-      scale: 1,
-      transition: {
-        delay: i * 0.15,
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    }),
-  };
-
   return (
     <section
-      ref={ref}
       id="childhood"
       className="relative w-full py-20 md:py-36 px-4 md:px-16 flex flex-col md:flex-row items-center gap-12 bg-black text-white"
     >
       {/* --- TEXT SECTION --- */}
-      <motion.div
-        className="md:w-1/2 flex flex-col gap-6 text-center md:text-left"
-        initial="hidden"
-        animate={controls}
-        variants={textVariant}
-      >
+      <div className="md:w-1/2 flex flex-col gap-6 text-center md:text-left">
         <h3
           className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-wide"
           style={{ fontFamily: "Cinzel" }}
@@ -81,19 +43,7 @@ export default function ChildhoodSection() {
         </blockquote>
 
         {/* --- AESTHETIC READ MORE BUTTON --- */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={controls}
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.6, ease: "easeOut" },
-            },
-          }}
-          className="mt-4"
-        >
+        <div className="mt-4">
           <Link
             href="/about"
             className="
@@ -121,18 +71,14 @@ export default function ChildhoodSection() {
               "
             ></span>
           </Link>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* --- IMAGES --- */}
       <div className="md:w-1/2 flex flex-wrap justify-center gap-3 md:gap-4">
         {images.map((src, idx) => (
-          <motion.div
+          <div
             key={idx}
-            custom={idx}
-            initial="hidden"
-            animate={controls}
-            variants={imageVariant}
             className={`
               relative 
               w-32 sm:w-40 md:w-56 
@@ -151,7 +97,7 @@ export default function ChildhoodSection() {
               fill
               className="object-cover"
             />
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

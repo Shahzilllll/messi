@@ -1,7 +1,5 @@
 "use client";
-
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 export default function BarcelonaEra() {
   const [isMuted, setIsMuted] = useState(true);
@@ -11,12 +9,7 @@ export default function BarcelonaEra() {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
 
         {/* Left: Interview Video */}
-        <motion.div
-          className="lg:w-1/2 relative w-full h-[450px] lg:h-[550px] flex justify-center"
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <div className="lg:w-1/2 relative w-full h-[450px] lg:h-[550px] flex justify-center">
           <video
             src="/about/interview.mp4"
             className="w-full h-full object-cover rounded-xl shadow-2xl border-2 border-pink-500"
@@ -31,15 +24,10 @@ export default function BarcelonaEra() {
           >
             {isMuted ? "Unmute" : "Mute"}
           </button>
-        </motion.div>
+        </div>
 
         {/* Right: Text */}
-        <motion.div
-          className="lg:w-1/2 flex flex-col items-center lg:items-start gap-6"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <div className="lg:w-1/2 flex flex-col items-center lg:items-start gap-6">
           <h2
             className="text-5xl lg:text-6xl font-[500] tracking-wide drop-shadow-lg [font-family:'Cinzel']"
           >
@@ -54,7 +42,7 @@ export default function BarcelonaEra() {
           <p className="text-md italic text-pink-400 text-center lg:text-left">
             "Even as a young boy, Messi’s dedication and vision were unmatched." – Coach
           </p>
-        </motion.div>
+        </div>
 
       </div>
     </section>

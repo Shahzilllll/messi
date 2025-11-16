@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 // Team Awards Data
 interface AwardGroup {
@@ -100,9 +99,6 @@ export default function AchievementsPage() {
   const [openSection, setOpenSection] = useState<"team" | "individual" | null>(null);
   const [expandedAward, setExpandedAward] = useState<string | null>(null);
 
-  const container = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } };
-  const item = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } };
-
   const handleToggle = (key: string) => setExpandedAward(expandedAward === key ? null : key);
 
   return (
@@ -133,18 +129,17 @@ export default function AchievementsPage() {
 
       {/* Team Awards */}
       {openSection === "team" && (
-        <motion.div initial="hidden" animate="visible" variants={container} className="w-full max-w-6xl flex flex-col gap-8">
+        <div className="w-full max-w-6xl flex flex-col gap-8">
           {teamAwards.map((club, idx) => (
-            <motion.div key={idx} variants={item} className="bg-white/5 border border-pink-600/30 rounded-3xl p-6 shadow-md hover:shadow-pink-500/50 transition-shadow duration-500">
+            <div key={idx} className="bg-white/5 border border-pink-600/30 rounded-3xl p-6 shadow-md hover:shadow-pink-500/50 transition-shadow duration-500">
               <h3 className="text-2xl md:text-3xl font-bold text-pink-500 mb-4">{club.club} ({club.titles} titles)</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
                 {club.awards.map((award, i) => {
                   const key = `${club.club}-${award.name}`;
                   const isOpen = expandedAward === key;
                   return (
-                    <motion.div
+                    <div
                       key={i}
-                      layout
                       className={`bg-white/10 rounded-2xl p-4 flex flex-col gap-2 cursor-pointer transition-all duration-500 hover:scale-105 hover:bg-white/20 ${
                         isOpen ? "bg-pink-900/30 shadow-pink-500/40" : ""
                       }`}
@@ -152,41 +147,33 @@ export default function AchievementsPage() {
                     >
                       <p className="font-semibold text-pink-400 text-lg">{award.name}</p>
                       {award.count && <p className="text-sm opacity-80">{award.count} times</p>}
-                      <AnimatePresence>
-                        {award.years && isOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="text-sm opacity-70 mt-2 pl-2 border-l border-pink-500"
-                          >
-                            Years: {award.years.join(", ")}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
+                      {award.years && isOpen && (
+                        <div className="text-sm opacity-70 mt-2 pl-2 border-l border-pink-500">
+                          Years: {award.years.join(", ")}
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       )}
 
       {/* Individual Awards */}
       {openSection === "individual" && (
-        <motion.div initial="hidden" animate="visible" variants={container} className="w-full max-w-6xl flex flex-col gap-8">
+        <div className="w-full max-w-6xl flex flex-col gap-8">
           {individualAwards.map((group, idx) => (
-            <motion.div key={idx} variants={item} className="bg-white/5 border border-pink-600/30 rounded-3xl p-6 shadow-md hover:shadow-pink-500/50 transition-shadow duration-500">
+            <div key={idx} className="bg-white/5 border border-pink-600/30 rounded-3xl p-6 shadow-md hover:shadow-pink-500/50 transition-shadow duration-500">
               <h3 className="text-2xl md:text-3xl font-bold text-pink-500 mb-4">{group.category}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
                 {group.awards.map((award, i) => {
                   const key = `${group.category}-${award.name}`;
                   const isOpen = expandedAward === key;
                   return (
-                    <motion.div
+                    <div
                       key={i}
-                      layout
                       className={`bg-white/10 rounded-2xl p-4 flex flex-col gap-2 cursor-pointer transition-all duration-500 hover:scale-105 hover:bg-white/20 ${
                         isOpen ? "bg-pink-900/30 shadow-pink-500/40" : ""
                       }`}
@@ -195,25 +182,18 @@ export default function AchievementsPage() {
                       <p className="font-semibold text-pink-400 text-lg">{award.name}</p>
                       {award.count && <p className="text-sm opacity-80">{award.count} times</p>}
                       {award.note && <p className="text-sm opacity-70">{award.note}</p>}
-                      <AnimatePresence>
-                        {award.years && isOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="text-sm opacity-70 mt-2 pl-2 border-l border-pink-500"
-                          >
-                            Years: {award.years.join(", ")}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
+                      {award.years && isOpen && (
+                        <div className="text-sm opacity-70 mt-2 pl-2 border-l border-pink-500">
+                          Years: {award.years.join(", ")}
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       )}
     </section>
   );

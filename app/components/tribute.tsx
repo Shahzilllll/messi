@@ -1,35 +1,41 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import { motion, useAnimation, useInView, Variants } from "framer-motion";
 import { VolumeX, Volume2 } from "lucide-react";
 
-export default function TributeVideoSection() {
-  const ref = useRef(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const inView = useInView(ref, { once: true, margin: "-150px" });
-  const controls = useAnimation();
-  const [muted, setMuted] = useState(true);
+// Simple inView hook
+function useInViewSimple(ref: React.RefObject<HTMLElement>, margin = 0) {
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
-    if (inView) controls.start("visible");
-  }, [inView, controls]);
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: `${margin}px` }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, [ref, margin]);
+
+  return inView;
+}
+
+export default function TributeVideoSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const inView = useInViewSimple(ref, -150);
+  const [muted, setMuted] = useState(true);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (inView) setVisible(true);
+  }, [inView]);
 
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setMuted(videoRef.current.muted);
     }
-  };
-
-  const fadeZoom: Variants = {
-    hidden: { opacity: 0, scale: 0.95, y: 50 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: { duration: 1, ease: "easeOut" },
-    },
   };
 
   return (
@@ -39,28 +45,20 @@ export default function TributeVideoSection() {
       className="w-full py-20 md:py-28 px-4 md:px-16 bg-black text-white flex flex-col items-center"
     >
       {/* Title */}
-      <motion.h2
-        initial="hidden"
-        animate={controls}
-        variants={fadeZoom}
-        className="text-2xl sm:text-3xl md:text-5xl font-bold mb-12 tracking-wide text-center"
-        style={{ fontFamily: 'Cinzel' }}
+      <h2
+        className={`text-2xl sm:text-3xl md:text-5xl font-bold mb-12 tracking-wide text-center transition-all duration-1000 ${
+          visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        }`}
+        style={{ fontFamily: "Cinzel" }}
       >
         The Making of a Legend
-      </motion.h2>
+      </h2>
 
       {/* Video Wrapper */}
-      <motion.div
-        initial="hidden"
-        animate={controls}
-        variants={fadeZoom}
-        className="
-          relative w-full max-w-4xl
-          rounded-2xl overflow-hidden
-          aspect-video
-          shadow-[0_0_40px_-10px_rgba(255,0,128,0.5)]
-          hover:brightness-105 transition-all duration-300
-        "
+      <div
+        className={`relative w-full max-w-4xl rounded-2xl overflow-hidden aspect-video shadow-[0_0_40px_-10px_rgba(255,0,128,0.5)] transition-all duration-1000 ${
+          visible ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 translate-y-12"
+        } hover:brightness-105`}
       >
         <div className="absolute inset-0 bg-black/15 pointer-events-none"></div>
 
@@ -88,24 +86,18 @@ export default function TributeVideoSection() {
             transition-all duration-300
           "
         >
-          {muted ? (
-            <VolumeX className="w-6 h-6 text-pink-500" />
-          ) : (
-            <Volume2 className="w-6 h-6 text-pink-500" />
-          )}
+          {muted ? <VolumeX className="w-6 h-6 text-pink-500" /> : <Volume2 className="w-6 h-6 text-pink-500" />}
         </button>
-      </motion.div>
+      </div>
 
       {/* Caption */}
-      <motion.p
-        initial="hidden"
-        animate={controls}
-        variants={fadeZoom}
-        className="mt-8 text-sm sm:text-base md:text-lg opacity-80 text-center max-w-2xl leading-relaxed"
+      <p
+        className={`mt-8 text-sm sm:text-base md:text-lg opacity-80 text-center max-w-2xl leading-relaxed transition-all duration-1000 ${
+          visible ? "opacity-80 translate-y-0" : "opacity-0 translate-y-12"
+        }`}
       >
-        A journey carved through passion, discipline, and moments that shaped the
-        very soul of football.
-      </motion.p>
+        A journey carved through passion, discipline, and moments that shaped the very soul of football.
+      </p>
     </section>
   );
 }

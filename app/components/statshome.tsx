@@ -1,6 +1,5 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
 import Link from "next/link";
 
 // Count-up number component
@@ -16,7 +15,7 @@ function CountUpNumber({
   className?: string;
 }) {
   const [count, setCount] = useState(0);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     if (!isInView) return;
@@ -40,10 +39,27 @@ function CountUpNumber({
   return <span className={className}>{count}</span>;
 }
 
+// Simple inView hook
+function useInViewSimple(ref: React.RefObject<HTMLElement | null>, margin = 0) {
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: `${margin}px` }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, [ref, margin]);
+
+  return inView;
+}
+
 export default function HomeStatsSection() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-  const controls = useAnimation();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInViewSimple(ref, -100);
   const [stats, setStats] = useState<{ label: string; value: number }[]>([]);
 
   // Fetch stats
@@ -58,13 +74,6 @@ export default function HomeStatsSection() {
       });
   }, []);
 
-  useEffect(() => {
-    if (inView) controls.start("visible");
-  }, [inView, controls]);
-
-  const container = { hidden: {}, visible: { transition: { staggerChildren: 0.2 } } };
-  const item = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } } };
-
   return (
     <section
       ref={ref}
@@ -72,27 +81,18 @@ export default function HomeStatsSection() {
       className="w-full py-16 md:py-32 px-4 md:px-16 bg-black text-white flex flex-col items-center"
     >
       {/* Title */}
-      <motion.h2
-        initial={{ opacity: 0, y: 50 }}
-        animate={controls}
-        variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
-        className="text-2xl sm:text-3xl md:text-5xl font-bold mb-10 text-center"
+      <h2
+        className="text-2xl sm:text-3xl md:text-5xl font-bold mb-10 text-center opacity-0 translate-y-10 transition-all duration-800"
         style={{ fontFamily: "Cinzel" }}
       >
         Career Highlights
-      </motion.h2>
+      </h2>
 
       {/* Stats grid */}
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate={controls}
-        className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 w-full max-w-3xl"
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 w-full max-w-3xl">
         {stats.map((stat, idx) => (
-          <motion.div
+          <div
             key={idx}
-            variants={item}
             className="flex flex-col items-center gap-2 p-4 md:p-6 bg-white/5 border border-pink-600/30 rounded-xl hover:scale-105 transition-transform duration-300 w-full sm:w-auto"
           >
             <CountUpNumber
@@ -101,17 +101,12 @@ export default function HomeStatsSection() {
               className="text-4xl md:text-5xl font-bold text-pink-500"
             />
             <span className="text-base md:text-lg opacity-80">{stat.label}</span>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
       {/* View More button */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={controls}
-        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
-        className="mt-12 flex justify-center w-full"
-      >
+      <div className="mt-12 flex justify-center w-full">
         <Link
           href="/achievements"
           className="
@@ -136,7 +131,7 @@ export default function HomeStatsSection() {
             transition-opacity duration-500
           "></span>
         </Link>
-      </motion.div>
+      </div>
     </section>
   );
 }

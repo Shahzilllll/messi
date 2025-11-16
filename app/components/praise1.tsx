@@ -1,24 +1,34 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
 
 export default function RonaldoPraise() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [muted, setMuted] = useState(true);
 
-  // Track if section is in view
-  const inView = useInView(containerRef, { once: false, margin: "-100px" });
+  // Check if section is in view
+  const isInView = () => {
+    if (!containerRef.current) return false;
+    const rect = containerRef.current.getBoundingClientRect();
+    return rect.top < window.innerHeight && rect.bottom > 0;
+  };
 
   // Auto-mute/unmute based on scroll
   useEffect(() => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !inView;
-    setMuted(!inView);
-  }, [inView]);
+    const handleScroll = () => {
+      if (!videoRef.current) return;
+      const visible = isInView();
+      videoRef.current.muted = !visible;
+      setMuted(!visible);
+    };
 
-  // Manual toggle
+    handleScroll(); // initial check
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Manual mute toggle
   const toggleMute = () => {
     if (!videoRef.current) return;
     videoRef.current.muted = !videoRef.current.muted;
@@ -26,8 +36,11 @@ export default function RonaldoPraise() {
   };
 
   return (
-    <section className="w-full min-h-screen bg-black text-white py-20 px-6 md:px-20 flex flex-col items-center">
-      {/* Main Heading */}
+    <section
+      ref={containerRef}
+      className="w-full min-h-screen bg-black text-white py-20 px-6 md:px-20 flex flex-col items-center"
+    >
+      {/* Heading */}
       <h1
         className="text-4xl sm:text-5xl md:text-6xl font-light tracking-[0.35em] text-center mb-6"
         style={{ fontFamily: "Cinzel" }}
@@ -39,15 +52,8 @@ export default function RonaldoPraise() {
       </p>
 
       {/* Cristiano Section */}
-      <motion.div
-        ref={containerRef}
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
-        className="w-full flex flex-col md:flex-row items-center gap-10 mb-24"
-      >
-        {/* Video Container */}
+      <div className="w-full flex flex-col md:flex-row items-center gap-10 mb-24">
+        {/* Video */}
         <div className="w-full md:w-1/2 relative rounded-xl shadow-2xl border-2 border-pink-500 overflow-hidden">
           <video
             ref={videoRef}
@@ -58,8 +64,6 @@ export default function RonaldoPraise() {
             playsInline
             className="w-full h-full object-cover"
           />
-
-          {/* Mute/Unmute Button */}
           <button
             onClick={toggleMute}
             className="absolute bottom-4 right-4 bg-black/70 text-pink-500 px-3 py-1 rounded-lg hover:bg-black/90 transition"
@@ -73,7 +77,6 @@ export default function RonaldoPraise() {
           <h2 className="text-3xl md:text-4xl font-semibold mb-4">
             <span className="text-pink-500">Cristiano Ronaldo</span>
           </h2>
-
           <p className="text-gray-300 leading-relaxed text-lg md:text-xl">
             Despite the rivalry that shaped a generation,{" "}
             <span className="text-pink-500 font-semibold">Cristiano</span> and{" "}
@@ -85,7 +88,7 @@ export default function RonaldoPraise() {
             recognizes greatness.
           </p>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

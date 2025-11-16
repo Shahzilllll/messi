@@ -1,6 +1,5 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
 
 // Count-up number
 function CountUp({ value, active }: { value: number; active: boolean }) {
@@ -28,10 +27,9 @@ function CountUp({ value, active }: { value: number; active: boolean }) {
   return <span>{count}</span>;
 }
 
-export default function stats() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-150px" });
-  const controls = useAnimation();
+export default function Stats() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
 
   // Hardcoded stats
   const stats = [
@@ -47,35 +45,48 @@ export default function stats() {
     { label: "Minutes Played", value: 65000 },
   ];
 
+  // Detect when in view
   useEffect(() => {
-    if (inView) controls.start("visible");
-  }, [inView, controls]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) setInView(true);
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
 
-  const parent = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
-  const card = { hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } };
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, []);
 
   return (
-    <main ref={ref} className="min-h-screen bg-black text-white py-16 px-4 md:px-12 flex flex-col items-center">
-      <motion.h2
-        initial={{ opacity: 0, y: 40 }}
-        animate={controls}
-        variants={{ visible: { opacity: 1, y: 0, transition: { duration: 0.8 } } }}
+    <main
+      ref={ref}
+      className="min-h-screen bg-black text-white py-16 px-4 md:px-12 flex flex-col items-center"
+    >
+      <h2
         className="text-3xl sm:text-4xl md:text-5xl font-light tracking-[0.35em] mb-12 text-center"
         style={{ fontFamily: "Cinzel" }}
       >
         S T A T S
-      </motion.h2>
+      </h2>
 
-      <motion.div initial="hidden" animate={controls} variants={parent} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-6 md:gap-8 max-w-6xl w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-6 md:gap-8 max-w-6xl w-full">
         {stats.map((item, idx) => (
-          <motion.div key={idx} variants={card} className="flex flex-col items-center justify-center bg-white/5 border border-pink-600/30 p-4 sm:p-5 md:p-6 rounded-2xl hover:scale-[1.06] transition-transform duration-300">
+          <div
+            key={idx}
+            className="flex flex-col items-center justify-center bg-white/5 border border-pink-600/30 p-4 sm:p-5 md:p-6 rounded-2xl"
+          >
             <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-pink-500">
               <CountUp value={item.value} active={inView} />
             </span>
-            <p className="text-xs sm:text-sm md:text-base text-center opacity-80 mt-2">{item.label}</p>
-          </motion.div>
+            <p className="text-xs sm:text-sm md:text-base text-center opacity-80 mt-2">
+              {item.label}
+            </p>
+          </div>
         ))}
-      </motion.div>
+      </div>
     </main>
   );
 }

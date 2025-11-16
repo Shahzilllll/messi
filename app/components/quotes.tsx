@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const quotes = [
@@ -51,23 +50,14 @@ export default function LegendQuotesSection() {
 
         {/* Quote */}
         <div className="w-full px-2 sm:px-4">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="bg-white/10 backdrop-blur-md p-4 sm:p-6 md:p-8 rounded-2xl border border-pink-600/20 shadow-md text-center mx-auto"
-            >
-              <p className="text-base sm:text-lg md:text-2xl italic mb-2 sm:mb-3">
-                "{quotes[index].text}"
-              </p>
-              <span className="text-xs sm:text-sm md:text-lg font-semibold opacity-80">
-                — {quotes[index].author}
-              </span>
-            </motion.div>
-          </AnimatePresence>
+          <div className="bg-white/10 backdrop-blur-md p-4 sm:p-6 md:p-8 rounded-2xl border border-pink-600/20 shadow-md text-center mx-auto transition-all duration-500">
+            <p className="text-base sm:text-lg md:text-2xl italic mb-2 sm:mb-3">
+              "{quotes[index].text}"
+            </p>
+            <span className="text-xs sm:text-sm md:text-lg font-semibold opacity-80">
+              — {quotes[index].author}
+            </span>
+          </div>
         </div>
 
         {/* Right Arrow */}

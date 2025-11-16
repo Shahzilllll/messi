@@ -1,19 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 export default function WorldCupAchievement() {
   const [isMuted, setIsMuted] = useState(true);
 
   return (
     <section className="w-full py-16 px-4 sm:px-6 lg:px-32 bg-black text-white">
-      <motion.div
-        className="max-w-7xl mx-auto flex flex-col items-center gap-8"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-8">
         {/* Heading */}
         <h2
           className="text-4xl sm:text-5xl lg:text-6xl font-[500] mb-6 tracking-wide drop-shadow-lg text-center [font-family:'Cinzel']"
@@ -45,7 +39,7 @@ export default function WorldCupAchievement() {
           <span className="text-pink-400"> FIFA World Cup 2022</span> with Argentina, cementing his legacy as one of the 
           greatest footballers of all time. A dream realized, a nation celebrated, and a story for the ages.
         </p>
-      </motion.div>
+      </div>
     </section>
   );
 }

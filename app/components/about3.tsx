@@ -1,9 +1,7 @@
 "use client";
 
-import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function EarlyAchievements() {
   const achievements = [
@@ -21,31 +19,19 @@ export default function EarlyAchievements() {
     }
   ];
 
-  const controls = useAnimation();
-
-  useEffect(() => {
-    controls.start("visible");
-  }, [controls]);
-
   return (
     <section className="w-full py-16 px-4 sm:px-6 lg:px-32 bg-black text-white">
-      <motion.h2
+      <h2
         className="text-4xl sm:text-5xl lg:text-6xl font-[500] mb-12 tracking-wide drop-shadow-lg text-center [font-family:'Cinzel']"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
       >
         Milestones & Achievements
-      </motion.h2>
+      </h2>
 
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-8 sm:gap-12 items-center justify-center">
         {achievements.map((item, idx) => (
-          <motion.div
+          <div
             key={idx}
             className="sm:w-1/2 flex flex-col items-center gap-4 bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-pink-600/20"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: idx * 0.2 }}
           >
             <Image
               src={item.img}
@@ -56,20 +42,12 @@ export default function EarlyAchievements() {
             />
             <h3 className="text-xl sm:text-2xl font-semibold mt-2 text-center text-pink-400">{item.title}</h3>
             <p className="text-center text-white/90 text-sm sm:text-base">{item.description}</p>
-          </motion.div>
+          </div>
         ))}
       </div>
 
-      {/* Animated Glowing Button */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={controls}
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-        }}
-        className="mt-12 flex justify-center w-full"
-      >
+      {/* Glowing Button */}
+      <div className="mt-12 flex justify-center w-full">
         <Link
           href="/achievements"
           className="
@@ -93,7 +71,7 @@ export default function EarlyAchievements() {
             transition-opacity duration-500
           "></span>
         </Link>
-      </motion.div>
+      </div>
     </section>
   );
 }

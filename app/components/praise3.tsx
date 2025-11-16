@@ -1,22 +1,32 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
 
 export default function HenryPraise() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [muted, setMuted] = useState(true);
 
-  // Track if section is in view
-  const inView = useInView(containerRef, { once: false, margin: "-100px" });
+  // Check if section is in view (roughly centered)
+  const isInView = () => {
+    if (!containerRef.current) return false;
+    const rect = containerRef.current.getBoundingClientRect();
+    return rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2;
+  };
 
   // Auto-mute/unmute based on scroll
   useEffect(() => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !inView;
-    setMuted(!inView);
-  }, [inView]);
+    const handleScroll = () => {
+      if (!videoRef.current) return;
+      const visible = isInView();
+      videoRef.current.muted = !visible;
+      setMuted(!visible);
+    };
+
+    handleScroll(); // initial check
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Manual toggle
   const toggleMute = () => {
@@ -26,23 +36,19 @@ export default function HenryPraise() {
   };
 
   return (
-    <section className="w-full min-h-screen bg-black text-white py-20 px-6 md:px-20 flex flex-col items-center">
+    <section
+      ref={containerRef}
+      className="w-full min-h-screen bg-black text-white py-20 px-6 md:px-20 flex flex-col items-center"
+    >
       {/* Henry Section */}
-      <motion.div
-        ref={containerRef}
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
-        className="w-full flex flex-col md:flex-row items-center gap-10 mb-24"
-      >
+      <div className="w-full flex flex-col md:flex-row items-center gap-10 mb-24">
         {/* Video Container */}
         <div className="w-full md:w-1/2 relative rounded-xl shadow-2xl border-2 border-pink-500 overflow-hidden">
           <video
             ref={videoRef}
             src="/praise/henry.mp4"
             autoPlay
-            muted
+            muted={muted}
             loop
             playsInline
             className="w-full h-full object-cover"
@@ -69,7 +75,7 @@ export default function HenryPraise() {
             Their bond is built on respect between two of the game’s purest attackers.
           </p>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
