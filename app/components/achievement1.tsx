@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react";
 // Count-up number
 function CountUp({ value, active }: { value: number; active: boolean }) {
   const [count, setCount] = useState(0);
-  const raf = useRef<number>();
+  const raf = useRef<number>(0);
 
   useEffect(() => {
     if (!active) return;
