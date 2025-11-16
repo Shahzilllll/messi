@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { motion, useAnimation, useInView, easeOut } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 export default function AboutMe() {
   const ref = useRef(null);
@@ -11,9 +11,9 @@ export default function AboutMe() {
     if (inView) controls.start("visible");
   }, [inView, controls]);
 
-  const textVariant = {
+  const textVariant: any = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: easeOut } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: "easeOut" } },
   };
 
   return (
