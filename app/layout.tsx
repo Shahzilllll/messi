@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ScrollToTop from "./scrolltotop";
+import { Analytics } from "@vercel/analytics/next"
  // make this file as we discussed
 
 // Fonts
@@ -38,6 +39,7 @@ export default function RootLayout({
         <ScrollToTop />
 
         <div className="min-h-screen flex flex-col">
+          <Analytics/>
           <Navbar />
           <main className="grow pt-20 sm:pt-24">{children}</main>
           <Footer />
