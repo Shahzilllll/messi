@@ -5,7 +5,6 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ScrollToTop from "./scrolltotop";
 import { Analytics } from "@vercel/analytics/next";
-import { ThemeProvider } from "next-themes";
 
 // Fonts
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -38,17 +37,17 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Shahzil" }],
   icons: {
-    icon: "/favicon.png", // your favicon here
+    icon: "/favicon.png",
   },
   openGraph: {
     title: "Lionel Messi: The Art of Football",
     description:
       "Explore Messi’s journey, achievements, and the artistry that defines the greatest footballer ever.",
-    url: "https://your-domain.com", // change to your real domain
+    url: "https://your-domain.com",
     siteName: "Messi: The Art of Football",
     images: [
       {
-        url: "/messi-og.png", // if you add an OG image later
+        url: "/messi-og.png",
         width: 1200,
         height: 630,
         alt: "Messi celebrating a goal",
@@ -69,21 +68,19 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${cinzel.variable} antialiased bg-black text-white`}
-        >
-          <ScrollToTop />
+    <html lang="en" className="bg-black">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${cinzel.variable} antialiased bg-black text-white`}
+      >
+        <ScrollToTop />
 
-          <div className="min-h-screen flex flex-col">
-            <Analytics />
-            <Navbar />
-            <main className="grow pt-20 sm:pt-24">{children}</main>
-            <Footer />
-          </div>
-        </body>
-      </ThemeProvider>
+        <div className="min-h-screen flex flex-col">
+          <Analytics />
+          <Navbar />
+          <main className="grow pt-20 sm:pt-24">{children}</main>
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }
