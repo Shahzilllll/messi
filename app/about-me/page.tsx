@@ -32,8 +32,8 @@ export default function AboutMe() {
         </p>
 
         <blockquote className="italic opacity-80 border-l-4 border-pink-600 pl-4">
-          "Aarish Ki Phen Nu Naman" —{" "}
-          <span className="text-pink-500 font-semibold">Rehan Ali Ajmeri</span>
+          "Sometimes you have to accept you can't win all the time." —{" "}
+          <span className="text-pink-500 font-semibold">Lionel Messi</span>
         </blockquote>
       </section>
 
