@@ -4,9 +4,8 @@ import "./globals.css";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ScrollToTop from "./scrolltotop";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "next-themes";
- // make this file as we discussed
 
 // Fonts
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -22,10 +21,48 @@ const cinzel = Cinzel({
   weight: ["400", "700", "900"],
 });
 
-// Metadata
+// Metadata (SEO + Favicon)
 export const metadata: Metadata = {
   title: "Lionel Messi: The Art of Football",
-  description: "Explore the life, achievements, and legacy of Lionel Messi",
+  description:
+    "Dive into the life, brilliance, and enduring legacy of Lionel Messi — the greatest footballer to grace the game.",
+  keywords: [
+    "Lionel Messi",
+    "Messi",
+    "GOAT",
+    "Football Legend",
+    "Barça",
+    "Argentina",
+    "Messi Stats",
+    "Messi Achievements",
+  ],
+  authors: [{ name: "Shahzil" }],
+  icons: {
+    icon: "/favicon.png", // your favicon here
+  },
+  openGraph: {
+    title: "Lionel Messi: The Art of Football",
+    description:
+      "Explore Messi’s journey, achievements, and the artistry that defines the greatest footballer ever.",
+    url: "https://your-domain.com", // change to your real domain
+    siteName: "Messi: The Art of Football",
+    images: [
+      {
+        url: "/messi-og.png", // if you add an OG image later
+        width: 1200,
+        height: 630,
+        alt: "Messi celebrating a goal",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lionel Messi: The Art of Football",
+    description: "A deep dive into the genius of Lionel Messi.",
+    images: ["/messi-og.png"],
+  },
 };
 
 export default function RootLayout({
@@ -33,24 +70,19 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-      >
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${cinzel.variable} antialiased bg-black text-white`}
-      >
-        {/* Scroll to top on refresh/navigation */}
-        <ScrollToTop />
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${cinzel.variable} antialiased bg-black text-white`}
+        >
+          <ScrollToTop />
 
-        <div className="min-h-screen flex flex-col">
-          <Analytics/>
-          <Navbar />
-          <main className="grow pt-20 sm:pt-24">{children}</main>
-          <Footer />
-        </div>
-      </body>
+          <div className="min-h-screen flex flex-col">
+            <Analytics />
+            <Navbar />
+            <main className="grow pt-20 sm:pt-24">{children}</main>
+            <Footer />
+          </div>
+        </body>
       </ThemeProvider>
     </html>
   );
