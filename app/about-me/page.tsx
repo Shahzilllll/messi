@@ -3,40 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function AboutMe() {
-  const tools = [
-    { name: "VS Code", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
-    { name: "Cursor", src: "/cursor.svg", white: true },
-    { name: "ChatGPT", src: "/chatgpt.svg", white: true },
-    { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-    { name: "Next.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-    { name: "Vercel", src: "/vercel.svg", white: true },
-    { name: "GitHub", src: "/github.svg", white: true },
-    { name: "Tailwind CSS", src: "/tailwind.svg", white: true },
-  ];
-
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
-  const [offset, setOffset] = useState(0);
-
-  useEffect(() => {
-    let animationFrame: number;
-    const speed = 1;
-
-    const animate = () => {
-      if (!paused && carouselRef.current) {
-        setOffset(prev => {
-          const maxScroll = carouselRef.current!.scrollWidth / 2;
-          const newOffset = prev + speed;
-          return newOffset >= maxScroll ? 0 : newOffset;
-        });
-      }
-      animationFrame = requestAnimationFrame(animate);
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [paused]);
-
   return (
     <main className="min-h-screen bg-black text-white px-4 sm:px-6 md:px-16 py-12 flex flex-col gap-16 sm:gap-20 md:gap-24">
 
