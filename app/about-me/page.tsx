@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function AboutMe() {
+  const [paused, setPaused] = useState(false); // keep this only once
+  const [offset, setOffset] = useState(0);
+
   const tools = [
     { name: "VS Code", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
     { name: "Cursor", src: "/tools/cursor.svg", white: true },
@@ -15,8 +18,6 @@ export default function AboutMe() {
   ];
 
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
-  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     let animationFrame: number;
@@ -36,6 +37,10 @@ export default function AboutMe() {
     animationFrame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrame);
   }, [paused]);
+
+  // ... rest of your JSX
+
+
 
   return (
     <main className="min-h-screen bg-black text-white px-4 sm:px-6 md:px-16 py-12 flex flex-col gap-16 sm:gap-20 md:gap-24">
