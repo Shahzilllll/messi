@@ -3,26 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function AboutMe() {
-  const [paused, setPaused] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  const tools = [
-    { name: "React", src: "/icons/react.svg", white: false },
-    { name: "Next.js", src: "/icons/nextjs.svg", white: true },
-    { name: "TypeScript", src: "/icons/typescript.svg", white: false },
-    { name: "Tailwind", src: "/icons/tailwind.svg", white: false },
-    { name: "Framer Motion", src: "/icons/framer.svg", white: false },
-  ];
-
-  useEffect(() => {
-    if (paused) return;
-    const interval = setInterval(() => {
-      setOffset(prev => prev + 1);
-    }, 50);
-    return () => clearInterval(interval);
-  }, [paused]);
-
   return (
     <main className="min-h-screen bg-black text-white px-4 sm:px-6 md:px-16 py-12 flex flex-col gap-16 sm:gap-20 md:gap-24">
 
