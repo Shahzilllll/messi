@@ -80,13 +80,15 @@ export default function HomeStatsSection() {
       id="home-stats"
       className="w-full py-16 md:py-32 px-4 md:px-16 bg-black text-white flex flex-col items-center"
     >
-      {/* Title */}
-      <h2
-        className="text-2xl sm:text-3xl md:text-5xl font-bold mb-10 text-center opacity-0 translate-y-10 transition-all duration-800"
-        style={{ fontFamily: "Cinzel" }}
-      >
-        Career Highlights
-      </h2>
+      <h3
+        className={`text-sm sm:text-base md:text-lg font-semibold mb-4 tracking-[0.35em] text-pink-500 text-center transition-all duration-1000 ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          }`}
+          style={{ fontFamily: "Cinzel" }}
+          >
+            STATS
+      </h3>
+
 
       {/* Stats grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 w-full max-w-3xl">
