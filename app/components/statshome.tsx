@@ -99,7 +99,7 @@ export default function HomeStatsSection() {
         }`}
         style={{ fontFamily: "Cinzel" }}
       >
-        STATS
+        
       </h3>
 
       {/* Title */}
