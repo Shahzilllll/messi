@@ -48,10 +48,10 @@ export default function AboutMe() {
       {/* Hero */}
       <section className="text-center">
         <h1 className="text-4xl sm:text-5xl md:text-7xl mb-2 sm:mb-4 font-extralight" style={{ fontFamily: "Cinzel" }}>
-          S H A H Z I L
+          M U H A M M A D
         </h1>
         <p className="text-lg sm:text-xl md:text-3xl max-w-3xl mx-auto opacity-90">
-          <span className="text-pink-500 font-semibold">N  A  D  E  E  M</span>
+          <span className="text-pink-500 font-semibold">S H A H Z I L</span>
         </p>
       </section>
 
