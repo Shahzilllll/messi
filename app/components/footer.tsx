@@ -86,7 +86,7 @@ export default function Footer() {
             </Link>
             <p className="text-gray-300/80 text-xs sm:text-sm text-center md:text-left max-w-xs sm:max-w-sm leading-relaxed italic px-2 sm:px-0">
               made this website for the greatest player of all time —{" "}
-              <span className="text-pink-400/90 font-medium not-italic">Shahzil Nadeem</span>
+              <span className="text-pink-400/90 font-medium not-italic">Shahzil</span>
             </p>
           </div>
 
