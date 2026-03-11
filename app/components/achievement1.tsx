@@ -31,21 +31,21 @@ export default function Stats() {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
 
-  // Hardcoded stats
+  
   const stats = [
-    { label: "Goals", value: 895 },
-    { label: "Assists", value: 401 },
-    { label: "Matches", value: 1134 },
-    { label: "Trophies", value: 46 },
+    { label: "Goals", value: 899 },
+    { label: "Assists", value: 407 },
+    { label: "Matches", value: 1140 },
+    { label: "Trophies", value: 48 },
     { label: "Ballon d'Ors", value: 8 },
     { label: "Champions League Titles", value: 4 },
     { label: "FIFA Club World Cups", value: 3 },
     { label: "European Golden Shoes", value: 6 },
     { label: "Hat-tricks", value: 61 },
-    { label: "Minutes Played", value: 65000 },
+    { label: "Minutes Played", value: 92000 },
   ];
 
-  // Detect when in view
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
