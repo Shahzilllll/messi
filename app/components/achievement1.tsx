@@ -33,7 +33,7 @@ export default function Stats() {
 
   
   const stats = [
-    { label: "Goals", value: 899 },
+    { label: "Goals", value: 901 },
     { label: "Assists", value: 407 },
     { label: "Matches", value: 1140 },
     { label: "Trophies", value: 48 },
